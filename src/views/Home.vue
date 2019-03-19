@@ -24,7 +24,7 @@
           <el-table-column label="Quantity" prop="quantity" />
           <el-table-column label="Amount" prop="amount" />
           <el-table-column align="right">
-            <template slot="header" slot-scope="scope">
+            <template slot="header">
               <el-button
                 type="primary"
                 icon="el-icon-plus"

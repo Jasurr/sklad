@@ -16,7 +16,7 @@
               >{{ link.title }}
             </router-link>
           </el-menu-item>
-          <el-menu-item index="1" v-if="isUserLogined" @click="logout">
+          <el-menu-item index="1" v-if="isUserLogined">
             <router-link to="/"  tag="span">Logout</router-link>
           </el-menu-item>
         </el-menu>
