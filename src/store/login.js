@@ -1,10 +1,3 @@
-class User {
-  constructor(username = "admin@mail.ru", password = "password") {
-    this.username = username;
-    this.password = password;
-  }
-}
-
 export default {
   state: {
     user: [
@@ -49,7 +42,7 @@ export default {
       });
     },
     logout({ commit }) {
-        commit("userLogined", false);
+      commit("userLogined", false);
     },
     clearError({ commit }) {
       commit("clearError");
