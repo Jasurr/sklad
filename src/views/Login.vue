@@ -27,8 +27,8 @@
               type="primary"
               @click="submitForm('dynamicValidateForm')"
               class="el-col-lg-push-16"
-              >Submit</el-button
-            >
+              >Submit
+            </el-button>
           </el-form-item>
         </el-form>
       </el-card>
@@ -71,11 +71,13 @@ export default {
     submitForm(formName) {
       this.$refs[formName].validate(valid => {
         if (valid) {
-          this.$store.dispatch("login", this.form);
-
-          if (!this.$store.getters.error) {
-            this.$router.push("/");
-          }
+          this.$store
+            .dispatch("login", this.form)
+            .then(() => {
+              this.$router.push("/");
+              this.$store.dispatch("clearError");
+            })
+            .catch(er => this.$message.error("Error, " + er));
         } else {
           this.$message.error("Error, Fill all field");
           return false;
@@ -84,8 +86,8 @@ export default {
     }
   },
   created() {
-    if (this.$route.query['loginError']) {
-      this.$message.error('Please log in to access this page.')
+    if (this.$route.query["loginError"]) {
+      this.$message.error("Please log in to access this page.");
     }
   }
 };
@@ -97,6 +99,7 @@ export default {
   display: table;
   content: "";
 }
+
 .clearfix:after {
   clear: both;
 }

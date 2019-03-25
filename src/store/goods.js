@@ -1,6 +1,6 @@
 export default {
   state: {
-    goods: [],
+    goods: []
   },
   mutations: {
     update(state, payload) {
@@ -15,12 +15,14 @@ export default {
     }
   },
   actions: {
-    insGood({ commit }, payload) {
+    insGood({ commit, getters }, payload) {
+      const employee = getters.currentUser;
       const id = Math.random();
-        commit("insGood", {
-          ...payload,
-          id
-        });
+      commit("insGood", {
+        ...payload,
+        id,
+        employee
+      });
     },
     update({ commit }, payload) {
       commit("update", payload);
@@ -30,8 +32,8 @@ export default {
     }
   },
   getters: {
-    getData(state) {
-      return state.goods;
+    getData(state, getters) {
+      return state.goods.filter(q => q.employee === getters.currentUser);
     },
     visible(state) {
       return state.visible;

@@ -2,10 +2,11 @@ export default {
   state: {
     user: [
       {
-        username: "admin@mail.ru",
+        username: "ad@mail.ru",
         password: "password"
       }
     ],
+    currentUser: "",
     message: "",
     isUser: false
   },
@@ -24,6 +25,9 @@ export default {
     },
     userLogined(state, payload) {
       state.isUser = payload;
+    },
+    currentUser(state, payload) {
+      state.currentUser = payload;
     }
   },
   actions: {
@@ -36,8 +40,9 @@ export default {
           item.password === payload.password
         ) {
           commit("userLogined", true);
+          commit("currentUser", payload.username);
         } else {
-          commit("error", "Wrong user name or password");
+          commit("error", "Wrong email or password");
         }
       });
     },
@@ -68,6 +73,9 @@ export default {
     },
     isUserLogined(state) {
       return state.isUser;
+    },
+    currentUser(state) {
+      return state.currentUser;
     }
   }
 };

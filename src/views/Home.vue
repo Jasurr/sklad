@@ -90,7 +90,28 @@ export default {
       this.formData = row;
     },
     handleDelete(index, row) {
-      this.$store.dispatch("removeGood", row);
+      this.$confirm(
+        "This will permanently delete the file. Continue?",
+        "Warning",
+        {
+          confirmButtonText: "OK",
+          cancelButtonText: "Cancel",
+          type: "warning"
+        }
+      )
+        .then(() => {
+          this.$store.dispatch("removeGood", row);
+          this.$message({
+            type: "success",
+            message: "Delete completed"
+          });
+        })
+        .catch(() => {
+          this.$message({
+            type: "info",
+            message: "Delete canceled"
+          });
+        });
     }
   }
 };

@@ -16,8 +16,8 @@
               >{{ link.title }}
             </router-link>
           </el-menu-item>
-          <el-menu-item index="1" v-if="isUserLogined">
-            <router-link to="/"  tag="span">Logout</router-link>
+          <el-menu-item index="2" v-if="isUserLogined" @click="logout">
+            Logout
           </el-menu-item>
         </el-menu>
       </el-header>
@@ -59,8 +59,29 @@ export default {
   },
   methods: {
     logout() {
-      this.$store.dispatch("logout");
-      this.$router.push("/login");
+      this.$confirm(
+        "Are you sure you want to exit. Continue?",
+        "Warning",
+        {
+          confirmButtonText: "OK",
+          cancelButtonText: "Cancel",
+          type: "warning"
+        }
+      )
+        .then(() => {
+          this.$store.dispatch("logout");
+          this.$router.push("/login");
+          this.$message({
+            type: "success",
+            message: "Exited"
+          });
+        })
+        .catch(() => {
+          this.$message({
+            type: "info",
+            message: "You are here"
+          });
+        });
     }
   },
   created() {

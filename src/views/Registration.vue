@@ -92,11 +92,13 @@ export default {
     submitForm(formName) {
       this.$refs[formName].validate(valid => {
         if (valid) {
-          this.$store.dispatch("registration", this.form);
-
-          if (!this.$store.getters.error) {
-            this.$router.push("/");
-          }
+          this.$store
+            .dispatch("registration", this.form)
+            .then(() => {
+              this.$router.push("/");
+              this.$store.dispatch("clearError");
+            })
+            .catch(error => this.$message.error("Error, " + error));
         } else {
           this.$message.error("Error, Fill all field");
           return false;
