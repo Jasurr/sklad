@@ -75,7 +75,7 @@ export default {
             .dispatch("login", this.form)
             .then(() => {
               this.$router.push("/");
-              this.$store.dispatch("clearError");
+              // this.$store.dispatch("clearError");
             })
             .catch(er => this.$message.error("Error, " + er));
         } else {
