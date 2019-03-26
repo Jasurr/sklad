@@ -3,7 +3,7 @@
     <el-main class="el-col-offset-8 el-col-8">
       <el-card class="el-col-12" justify="center">
         <div slot="header" class="clearfix">
-          <span>Login page</span>
+          <span>Registration page</span>
         </div>
         <el-form
           :model="form"
@@ -34,8 +34,8 @@
               type="primary"
               @click="submitForm('dynamicValidateForm')"
               class="el-col-lg-push-16"
-              >Submit</el-button
-            >
+              >Submit
+            </el-button>
           </el-form-item>
         </el-form>
       </el-card>
@@ -92,13 +92,13 @@ export default {
     submitForm(formName) {
       this.$refs[formName].validate(valid => {
         if (valid) {
-          this.$store
-            .dispatch("registration", this.form)
-            .then(() => {
-              this.$router.push("/");
-              this.$store.dispatch("clearError");
-            })
-            .catch(error => this.$message.error("Error, " + error));
+          this.$store.dispatch("registration", {
+            email: this.form.email,
+            password: this.form.password
+          });
+          if (!this.$store.getters.error) {
+            this.$router.push("/");
+          }
         } else {
           this.$message.error("Error, Fill all field");
           return false;
@@ -115,6 +115,7 @@ export default {
   display: table;
   content: "";
 }
+
 .clearfix:after {
   clear: both;
 }

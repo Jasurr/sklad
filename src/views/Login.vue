@@ -27,8 +27,8 @@
               type="primary"
               @click="submitForm('dynamicValidateForm')"
               class="el-col-lg-push-16"
-              >Submit
-            </el-button>
+              >Submit</el-button
+            >
           </el-form-item>
         </el-form>
       </el-card>
@@ -65,6 +65,9 @@ export default {
   computed: {
     error() {
       return this.$store.getters.error;
+    },
+    userLogin() {
+      return this.$store.getters.userLogin;
     }
   },
   methods: {
@@ -75,9 +78,8 @@ export default {
             .dispatch("login", this.form)
             .then(() => {
               this.$router.push("/");
-              // this.$store.dispatch("clearError");
             })
-            .catch(er => this.$message.error("Error, " + er));
+            .catch(err => this.$message.error("Error, " + err));
         } else {
           this.$message.error("Error, Fill all field");
           return false;
@@ -99,7 +101,6 @@ export default {
   display: table;
   content: "";
 }
-
 .clearfix:after {
   clear: both;
 }

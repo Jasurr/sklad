@@ -2,13 +2,14 @@ export default {
   state: {
     user: [
       {
-        username: "ad@mail.ru",
+        email: "ad@mail.ru",
         password: "password"
       }
     ],
     currentUser: "",
     message: "",
-    isUser: false
+    isUser: false,
+    error: ""
   },
   mutations: {
     error(state, message) {
@@ -33,18 +34,16 @@ export default {
   actions: {
     login({ commit, getters }, payload) {
       commit("clearError");
-
-      getters.userLogin.forEach(item => {
-        if (
-          item.username === payload.username &&
-          item.password === payload.password
-        ) {
-          commit("userLogined", true);
-          commit("currentUser", payload.username);
-        } else {
-          commit("error", "Wrong email or password");
-        }
-      });
+      if (
+        getters.userLogin.filter(
+          q => q.email === payload.email && q.password === payload.password
+        ).length > 0
+      ) {
+        commit("userLogined", true);
+        commit("currentUser", payload.email);
+      } else {
+        commit("error", "Wrong email or password");
+      }
     },
     logout({ commit }) {
       commit("userLogined", false);
@@ -54,14 +53,13 @@ export default {
     },
     registration({ commit, getters }, user) {
       commit("clearError");
-      getters.userLogin.forEach(item => {
-        if (item.username !== user.username) {
-          commit("registration", user);
-          commit("userLogined", true);
-        } else {
-          commit("error", "This email exists, Please enter other email");
-        }
-      });
+      if (getters.userLogin.filter(q => q.email === user.email).length === 0) {
+        commit("currentUser", user.email);
+        commit("registration", user);
+        commit("userLogined", true);
+      } else {
+        commit("error", "This email exists, Please enter other email");
+      }
     }
   },
   getters: {
