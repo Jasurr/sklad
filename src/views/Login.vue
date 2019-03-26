@@ -13,13 +13,15 @@
           :rules="formRules"
         >
           <el-form-item prop="email" label="Email">
-            <el-input v-model="form.email"></el-input>
+            <el-input autofocus  v-model="form.email"></el-input>
           </el-form-item>
           <el-form-item label="Password" prop="password">
             <el-input
               type="password"
               v-model="form.password"
+              @keyup.enter="alert(1)"
               autocomplete="off"
+              show-password
             ></el-input>
           </el-form-item>
           <el-form-item>
